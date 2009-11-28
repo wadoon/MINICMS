@@ -51,10 +51,10 @@ You can use one of this parser above or impelement an own on.
 Within web pages following occurance will be replaced:
 
 | occurance       | replacement |
-| _w/o_,   §w/o/§ | direct url for going around the index.php to the @DATA_DIR@ |	     		     
-| _site_,  §site§ | url to the index.php page usage like
+| _w/o_,   Â§w/o/Â§ | direct url for going around the index.php to the @DATA_DIR@ |	     		     
+| _site_,  Â§siteÂ§ | url to the index.php page usage like
 | _site_/index.text for main page |
-| _root_,  §root§ | root url for this site basename from _site_ |
+| _root_,  Â§rootÂ§ | root url for this site basename from _site_ |
 
 
 h3. autoindex function
