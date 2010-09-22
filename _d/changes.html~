@@ -1,0 +1,7 @@
+<ul>
+	<li><a href="software/ll1parser.text">LL(1)-Parsergenerator</a> Create a parser for LL(1) grammars</li>
+	<li><a href="software/hammingcode.text">HammingCode</a> An applet for visualization of hamming code</li>
+	<li><a href="software/numconv.text">NumConv</a> Umwandlung innerhalb der Zahlensystem (2,8,10,16) inkl. Stellen- und B-Komplement</li>
+	<li>--</li>
+	<li>Piccut is in progress</li>
+</ul>

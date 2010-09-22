@@ -1,13 +1,11 @@
 <?
 require_once("config.php");
-require_once("functions.php");
-
+require_once("lib/functions.php");
+require_once("lib/compability.php");
+$style = "light";
 $path = '/';
 $requested_file = __FILE__;
-
-
 $startpath = isset($_GET['path'])? $_GET['path'] : DATA_DIR;
-
 $a =  strpos($startpath, DATA_DIR);
 
 
@@ -16,6 +14,7 @@ if($a===false or $a != 0)
 
 $totalfiles = 0;
 $totalsize  = 0;
+
 
 function strip($p)
 {
@@ -28,8 +27,8 @@ function ext($p)
 }
 
 function printdir($path)
-{
-	global $totalsize, $totalfiles;
+{       
+	global $totalsize, $totalfiles, $content;
 	$files = scandir($path);
 	foreach($files as $file)
 	{
@@ -37,14 +36,14 @@ function printdir($path)
 		$p = "$path/$file";
 		if( is_dir($p ))
 		{
-			echo "<li class='folder'>$file/<ul>";
+			$content .= "<li class='folder'>$file/<ul>";
 			printdir($p);
-			echo "</ul></li>";
+			$content .= "</ul></li>";
 		}
 		else
 		{
 			$size = filesize($p);
-			echo "<li class='file ".ext($file)."'><a href='".SITE_INDEX.'/'.strip($p)."'>$file</a> ($size Byte)</li>";
+			$content .= "<li class='file ".ext($file)."'><a href='".SITE_INDEX.'/'.strip($p)."'>$file</a> ($size Byte)</li>";
 			$totalsize+=$size;
 			$totalfiles++;
 		}
@@ -53,11 +52,9 @@ function printdir($path)
 
 }
 
-include "head.php";
-echo "<h1>Sitemap: $startpath</h1>"
+$content = "";
+$content .= "<h1>Sitemap: $startpath</h1>";
+$content .= "<ul>".printdir($startpath)."</ul>";
+$content .= "<p><b>insgesamt $totalfiles Dateien mit <?=round($totalsize/1024)?> kB</b></p>";
+include "decorator.php";
 ?>
-<ul><?printdir($startpath);?></ul>
-
-<p><b>insgesamt <?=$totalfiles?> Dateien mit <?=round($totalsize/1024)?> kB</b></p>
-
-<?include "foot.php";?>

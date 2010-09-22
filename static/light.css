@@ -1,0 +1,103 @@
+/******************************************************************************/
+body
+{ 
+  background-image: url(bkg.gif);
+  background-attachment:fixed; 
+  background-color:transparent;
+  background-position:50% 0;
+  padding:5em;
+  font-family:'Cantarell', serif;
+}
+
+h1,h2,h3 {
+    font-family:'Cardo', sans-serif;
+}
+
+
+.body
+{
+}
+
+.footer 
+{
+    color:#333;
+}
+
+.header 
+{
+}
+
+.content
+{ 
+    border:1px #ccc solid;
+  
+    -webkit-box-shadow: 10px 25px 10px #222;
+    -moz-box-shadow: 5px 5px 20px #222;
+    box-shadow: 10px 25px 10px #222; 
+}
+
+div.logo
+{
+    color:#333;
+}
+
+div.navi {
+}
+
+
+div.footer a,
+div.footer a:link,
+div.footer a:active,
+div.footer a:hover,
+div.footer a:visited, 
+div.navi a,
+div.navi a:link,
+div.navi a:active,
+div.navi a:hover,
+div.navi a:visited {
+    color:#222;
+}
+
+
+div.navi a,
+div.navi a:link,
+div.navi a:active,
+div.navi a:hover {
+}
+
+div.navi a:visited {
+}
+
+.sep {
+}
+
+
+/********************************************************************/
+
+
+
+/****content******************/
+.rbox, .lbox , .source{
+  border:#222 1px solid;
+  width:20em;
+  padding:0.5em;
+  margin:0.5em;
+
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  border-radius: 0.5em; 
+
+}
+
+
+.rbox {float:right;}
+.lbox {float:left; }
+
+.source {
+}
+
+.source:hover {
+    opacity:1;
+
+}
+

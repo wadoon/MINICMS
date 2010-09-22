@@ -1,0 +1,118 @@
+/******************************************************************************/
+body
+{ 
+  background-image: url(bkgd.png);
+  background-attachment:fixed; 
+  background-color:transparent;
+  background-position:50% 0;
+}
+
+.body
+{
+}
+
+.footer 
+{
+    color:white;
+}
+
+.header 
+{
+
+}
+
+.content
+{ 
+    background:white;
+  
+    -webkit-box-shadow: 10px 25px 10px white;
+    -moz-box-shadow: 5px 5px 20px white;
+    box-shadow: 10px 25px 10px white; 
+}
+
+.content-inner 
+{
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: helvetica, arial, verdana, sans-serif;
+    font-weight: normal;
+}
+
+.content h1 
+{
+
+}
+
+.content h2 
+{
+
+}
+
+.content h3 
+{
+
+}
+
+.content h4 
+{
+
+}
+
+a:visited 
+{ 
+
+}
+
+a:link, a:focus, a:active 
+{
+}
+
+
+/********************************************************************/
+/*********************** hierarchie *********************************/
+
+div.logo
+{
+    color:#888;
+}
+
+div.navi {
+    color:#ccc;
+}
+
+
+div.footer a,
+div.footer a:link,
+div.footer a:active,
+div.footer a:hover,
+div.footer a:visited, 
+div.navi a,
+div.navi a:link,
+div.navi a:active,
+div.navi a:hover,
+div.navi a:visited {
+    color:#ccc;
+}
+
+
+div.navi a,
+div.navi a:link,
+div.navi a:active,
+div.navi a:hover {
+    text-decoration:none;
+    font-weight:bold;
+}
+
+div.navi a:visited {
+    font-weight:200;
+}
+
+.sep {
+    font-weight:900;
+}
+
+
+/********************************************************************/
+

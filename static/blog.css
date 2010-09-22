@@ -1,0 +1,18 @@
+div.article {
+    
+}
+
+h2.article  {
+    border-bottom:1px solid #666;
+    background:url(bgk.gif);
+}
+
+div.sub {
+    float:right;
+    font-style:italic;
+}
+
+div.inner {
+
+}
+
