@@ -14,16 +14,27 @@ function cms_render_file($path, $config) {
 		$fn = "parse_".DEFAULT_HANDLER;
 
 	$content =  meta_split( file_get_contents($path) );
-	$config->override(meta_parse($content[0]));
-	$parsed = call_user_func_array($fn, array($content[1], $config));
-	return $parsed;
+	switch(count($content))
+	{
+		case 3:
+			$config->override(meta_parse($content[1]));
+			$parsed = call_user_func_array($fn, array($content[2], $config));
+			break;
+		case 2:
+			$parsed = call_user_func_array($fn, array($content[0], $config));
+			break;
+ 		default: $parsed="";
+	}
+	return afterparse($parsed,$config);
 }
 
 function meta_split($content) {
 	$matches = array();
 
 	if( strpos($content, ':') > strpos($content,"\n"))
+	{
 		return array("",$content);
+	}
 	preg_match("/(.+?)\n\n(.*)/ism", $content, $matches);
 	return $matches;
 }
@@ -40,10 +51,17 @@ function meta_parse($string)
 	{
 		if(empty($line)) continue;
 		if(substr($line,0,1)=='#')continue;
-		list($key,$value) = explode(':', $line);
-		$cfg[trim($key)]=trim($value);
+		@list($key,$value) = explode(':', $line,2);
+		$cfg[trim($key)]=meta_eval(trim($value));
 	}
 	return $cfg;
+}
+
+function meta_eval($value)
+{
+	if(preg_match("/<.*>/ims",$value))
+		return eval( "return ".trim($value,'<>').';' );
+	return $value;
 }
 
 ###############################################################################
@@ -57,30 +75,32 @@ function parse_source($content,$language)
 	$geshi = new GeSHi($content , $language);
 	$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
 
-	define("NO_FORMULA",true);
-	define("NO_INDENT",true);
+	#define("NO_FORMULA",true);
+	$config->page->noformula = true;
+	#define("NO_INDENT",true);
+	$config->page->noindent = true;
 	return "<div style='text-align:right;'><a href='$_SERVER[PHP_SELF]?type=plain'>view plain</a></div>".$geshi->parse_code();
 }
 
-function parse_py  ($content) { return parse_source($content, "python"); }
-function parse_c   ($content) { return parse_source($content, "c");      }
-function parse_cpp ($content) { return parse_source($content, "cpp");    }
-function parse_h   ($content) { return parse_source($content, "h");      }
-function parse_boo ($content) { return parse_source($content, "boo");    }
-function parse_java($content) { return parse_source($content, "java");   }
-function parse_sh  ($content) { return parse_source($content, "bash");   }
-function parse_pas ($content) { return parse_source($content, "pascal"); }
-function parse_dpr ($content) { return parse_source($content, "pascal"); }
-function parse_sql ($content) { return parse_source($content, "sql");    }
-function parse_phps ($content) { return parse_source($content, "php");   }
-function parse_php ($content) { return parse_source($content, "php");   }
-function parse_conf ($content) { return parse_plain($content);   }
+function parse_py  ($content,$c=null) { return parse_source($content, "python"); }
+function parse_c   ($content,$c=null) { return parse_source($content, "c");      }
+function parse_cpp ($content,$c=null) { return parse_source($content, "cpp");    }
+function parse_h   ($content,$c=null) { return parse_source($content, "h");      }
+function parse_boo ($content,$c=null) { return parse_source($content, "boo");    }
+function parse_java($content,$c=null) { return parse_source($content, "java");   }
+function parse_sh  ($content,$c=null) { return parse_source($content, "bash");   }
+function parse_pas ($content,$c=null) { return parse_source($content, "pascal"); }
+function parse_dpr ($content,$c=null) { return parse_source($content, "pascal"); }
+function parse_sql ($content,$c=null) { return parse_source($content, "sql");    }
+function parse_phps ($content,$c=null) { return parse_source($content, "php");   }
+function parse_php ($content,$c=null) { return parse_source($content, "php");   }
+function parse_conf ($content,$c=null) { return parse_plain($content);   }
 
 
 /**
  * html content need no special treetment
  */ 
-function parse_html($content) 
+function parse_html($content,$c=null) 
 {
 	return $content;
 }
@@ -89,7 +109,7 @@ function parse_html($content)
 /**
  * DEFAULT-HANDLER
  */
-function parse_mime($content)
+function parse_mime($content,$c=null)
 {
 	global $path;
 	header("content-type: ". get_mime_type($path)); 
@@ -116,16 +136,16 @@ class PHPContent
 	}
 }
 
-function parse_phpx($content) {  return new PHPContent($content); }
+function parse_phpx($content,$c=null) {  return new PHPContent($content); }
 
 /**
  * Text will be wrapped and has <pre> enviroment
  */ 
-function parse_txt($content) {
+function parse_txt($content,$c=null) {
 	return "<div class='simpleText'>".text_wrap($content,72)."</div>";
 }
 
-function parse_plain($content) {
+function parse_plain($content,$c=null) {
 	header("Content-Type: text/plain");
 	echo $content; exit;
 }
@@ -133,33 +153,25 @@ function parse_plain($content) {
 /**
  * call textile
  */ 
-function parse_md($content) {  return Markdown($content);  }
+function parse_mkd($content,$config) {  return Markdown($content);  }
 
-function parse_ml($content) {
+function parse_layout($content,$cfg) {
 	global $request_file;
-	$matches = array();
-	preg_match("/(.+?)\n\n(.*)/ism", $content, $matches);
-
-	$cfg = meta($matches[1]);
-	trigger_page_action();
-
+	
 	if( isset($cfg['layout']) )
-		$layout = render_file($cfg['layout']);
+		$layout = cms_render_file($cfg['layout'], $cfg->copy() );
 	else
-		$layout = $matches[2];
+		$layout = $content;
 
 	$replace = array();
 	foreach($cfg as $key => $var)
 	{
 		if( preg_match("/ml\\./", $key) )
 		{
-			$replace[ substr($key,3) ] = 
-				render_file( DATA_DIR.'/'.dirname($request_file)."/$var");
+			$replace[ "%".substr($key,3)."%" ] = 
+				cms_render_file( dirname($cfg->path)."/$var",$cfg->copy() );
 		}
 	}
-
-
-	config_melt($cfg);
 	$layout = str_replace(array_keys($replace), array_values($replace), $layout);
 	return $layout;
 }

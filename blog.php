@@ -9,17 +9,16 @@
 
 ###############################################################################
 ## Include Section
-require_once("lib/compability.php");
-require_once("lib/functions.php");
-require_once("config.php");
-require_once('lib/classTextile.php');
-require_once('lib/markdown.php');
-require_once('lib/simple_html_dom.php');
-require_once("lib/geshi/geshi.php");
+require("include/compability.php");
+require("include/functions.php");
+require("include/config.php");
+require("include/mime.php");
+require("include/postfilter.php");
+require("include/render.php");
 
-require_once("lib/render.php");
-require_once("lib/postfilter.php");
-###############################################################################
+require("config/config.php");
+require("config/defaults.php");
+require("config/snippets.php");
 ###############################################################################
 ## Functions 
 function dflt(&$a,$d)
@@ -40,12 +39,14 @@ function extr_date($file)
     return filemtime($file); 
 }
 
+$config = cms_get_config();
 function get_article($file)
 {
+	global $config;
         $article = array();
         $article['title']   = extr_title($file);
         $article['date']    = extr_date($file);
-        $article['content'] = render_file($file);
+        $article['content'] = cms_render_file($file,$config);
         $article['file']    = $file;
         return $article; 
 }
@@ -57,8 +58,9 @@ function usort_articles($i,$j)
 
 function retrieveall($count = false, $page = false)
 {
-    $files = glob("bata/*");
+    $files = glob(BLOG_DIR."/*");
     $articles = array();
+
 
     if($count)
     {
@@ -113,21 +115,13 @@ if( !isset($requested_file) or
 $articles = call_user_func($requested_file,array());
 
 ## weigla: add an dyn. snippet for cwd
-$base = "";
-
-$snippets['%cwd%'] = SITE_INDEX."/$base";
-$snippets['_cwd_'] = SITE_INDEX."/$base";
-
-$snippets['%wcwd%'] = ROOT_URL.DATA_DIR."/$base";
-$snippets['_wcwd_'] = ROOT_URL.DATA_DIR."/$base";
-
 ############################################
-@header("content-type: text/html; charset=utf-8");
-@header('Last-Modified:'.date('r',filemtime($requested_file)));
 
-$style =  "light";
+@header("content-type: text/html; charset=utf-8");
+#@header('Last-Modified:'.date('r',filemtime($requested_file)));
+
 if(isset($_GET['rss']))
-    require("rss_decorator.php");
+    require("include/rss.view.php");
 else
-    require("blog_decorator.php");
+    require("include/blog.view.php");
 ?>

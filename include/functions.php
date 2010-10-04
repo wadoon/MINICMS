@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Load all files with the given pattern
- */
-function cms_load($pattern)
-{
-	$files = _glob($pattern);
-	sort($files);
-	foreach($files as $file)
-		require($file);
-}
-
 function cms_path()
 {
 	$chunks = func_get_args();
@@ -62,8 +51,20 @@ function cms_get_file($requested_path,$config)
 		$path = cms_error(404);
 
 	$config->set("page.path", $path);
+	$config->set("page.base", cms_get_base() );
 
 	return $path;
+}
+
+function cms_get_base()
+{
+	return dirname($_SERVER['PHP_SELF']);
+}
+
+function cms_get_config()
+{
+	global $defaults;
+	return new config($defaults);
 }
 
 function cms_error($code=404)

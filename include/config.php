@@ -13,6 +13,20 @@ function str_startswith($haystack, $needle)
 	return strncmp($haystack, $needle, strlen($needle)) == 0;
 }
 
+function array_melt()
+{
+	$arrays = func_get_args() ;
+	$a = array_shift($arrays);
+	foreach($arrays as $array)
+	{
+		foreach($array as $k=>$v)
+		{
+			$a[]=$v;
+		}	
+	}
+	return $a;
+}
+
 
 class config 
 {
@@ -44,8 +58,13 @@ class config
     function __get($name)
     {
 	    $path = $this->prefix . $name;
+	
 	    if(array_key_exists($path, $this->overlay))
+	    {
+		    if(gettype($this->overlay[$path]) =="array")
+			    return array_melt( $this->root[$path],$this->overlay[$path] );
 		    return $this->overlay[$path];
+	    }
 	    elseif(array_key_exists($path , $this->root))
 		    return $this->root[$path];
 	    else

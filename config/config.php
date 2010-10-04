@@ -10,7 +10,7 @@ define('ROOT_DIR', dirname(__FILE__).'/../');
 define('CONFIG_DIR', dirname(__FILE__).'/../');
 
 //root url from the site!
-define('ROOT_URL','/~alex/public_html/');
+define('ROOT_URL','/~alex/fht/');
 
 // path to the index.php 
 define('SITE_INDEX',ROOT_URL.'index.php');

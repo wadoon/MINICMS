@@ -1,28 +1,34 @@
 <?php
-$filters = array("codehighlight");
+$__postfilters = array("codehighlight");
+
+function cms_add_postfilter($fn)
+{
+	global $__postfilters;
+	$__postfilters[] = $fn;
+}
 
 /**
  *
  *
  */
-function afterparse($parsed)
+function afterparse($parsed,$config)
 {
-    global $snippets, $filters;
-    $parsed =  callfunctions($parsed);
+    global $snippets, $__postfilters;
+    $parsed =  callfunctions($parsed,$config);
 
     $parsed = str_replace(array_keys($snippets),
                           array_values($snippets),
                           $parsed);
 
-    $parsed =  callfunctions($parsed);
+    $parsed =  callfunctions($parsed,$config);
     
-    foreach($filters as $filter)
+    foreach($__postfilters as $filter)
         $parsed = call_user_func($filter, $parsed);
 
     return $parsed;
 }
 
-function callfunctions($parsed){
+function callfunctions($parsed,$config){
     #$a = array();
     #preg_match_all('/\[(\w+?)\](.*?)\[\/(\w+?)\]/ims', $parsed, $a);
     #print_r($a);
@@ -30,16 +36,13 @@ function callfunctions($parsed){
     #$parsed = preg_replace_callback('/\[(.+?)\](.*?)\[\/(.+?)\]/ims',"bodyfncall",$parsed);
     $parsed = preg_replace_callback('/[?]"(.+?)"/ims',"callreplacefn",$parsed);
     $parsed = preg_replace_callback('/\[(.+?)\]/ims',"callreplacefn",$parsed);
-    
-    
-    
     return $parsed;
 }
 
 /**
  *
  */
-function bodyfncall($matches)
+function _bodyfncall($matches)
 {
     if($matches[1] != array_pop($matches))
         return $matches[0];
@@ -113,7 +116,8 @@ function highlightcllbck($matches)
 function import($file)
 {
     $f = DATA_DIR."/$file";
-    $content = render_file(retrieve_file($f));
+    $config = cms_get_config();
+    $content = cms_render_file(cms_get_file($f,$config),$config);
     return $content;
 }
 

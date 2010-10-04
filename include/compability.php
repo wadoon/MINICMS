@@ -84,7 +84,10 @@ if(!function_exists('get_mime_type')) {
 		require_once("mime.php");
 		global $mime;
 		$ext = substr($filename, strrpos($filename,'.')+1);
-		return $mime[$ext];
+		if($ext && array_key_exists($ext,$mime))
+			return $mime[$ext];
+		else
+			return false;
 	} 
 }
 

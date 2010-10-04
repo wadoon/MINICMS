@@ -11,13 +11,16 @@
 ## Include Section
 require("include/compability.php");
 require("include/functions.php");
+require("include/config.php");
+require("include/mime.php");
+require("include/postfilter.php");
+require("include/render.php");
 
-cms_load("config/*.php");
-include("include/compability.php");
-include("include/config.php");
-include("include/mime.php");
-include("include/postfilter.php");
-include("include/render.php");
+require("config/config.php");
+require("config/defaults.php");
+require("config/snippets.php");
+
+
 
 ##############################################################################
 ## main - section
@@ -37,7 +40,6 @@ else
 		$requested_file = DEFAULT_PAGE;
 }
 ############################################
-
 $config = new config($defaults);
 
 
@@ -47,7 +49,6 @@ $content = cms_render_file($path, $config);
 @header("content-type: text/html; charset=utf-8");
 #@header('Expires: '.date('r', time() + 7*24*60*60));
 @header('Last-Modified:'.date('r',filemtime($requested_file)));
-
 require("include/std.view.php");
 ?>
 

@@ -3,9 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>alexander.weigl - <?=$config['page.title']?></title>
+        <title>alexander.weigl - <?=$config->page->title?></title>
 
-        <?php if( !$config['layout.nocss']): ?>
+        <?php if( !$config->layout->nocss): ?>
         <link href='http://fonts.googleapis.com/css?family=Reenie+Beanie' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Cantarell:regular,italic' rel='stylesheet' type='text/css'>
@@ -15,22 +15,25 @@
         <link type="text/css" rel="stylesheet"  media="print" href="<?=ROOT_URL?>/static/print.css"></link>
         <? endif;?>
 
-        <?php if (! $config['layout.nojavascript']): ?>
-        <script language="javascript" src="<?=ROOT_URL?>static/ASCIIMathML.js"></script>
-        <script language="javascript" src="<?=ROOT_URL?>static/ASCIIsvg.js"></script>
-        <script language="javascript" src="<?=ROOT_URL?>static/raphael-min.js"></script>
+        <?php if (! $config->layout->nojavascript): ?>
+		<script language="javascript" src="<?=ROOT_URL?>static/ASCIIMathML.js"></script>
+		<script language="javascript" src="<?=ROOT_URL?>static/ASCIIsvg.js"></script>
+		<script language="javascript" src="<?=ROOT_URL?>static/raphael-min.js"></script>
         <? endif;?>
-        <?=$config['layout.noindent'] ?"<style> .content   {width:inherit; margin:auto; }</style>":""?>
-        <base href="http://<?=$_SERVER['SERVER_NAME'].$base?>" />
+        <?=$config->layout->noindent ?"<style> .content   {width:inherit; margin:auto; }</style>":""?>
+        <base href="<?=$config->page->base?>" />
     </head>
     <body>
+<pre>
+<?#var_dump($config)?></pre>
+
         <div class="body">
             <div class="header">
                 <div class="logo">alexander.weigl</div>
-                <?php if(!$config['navi.disabled']):?>
+                <?php if(!$config->navi->disabled):?>
                 <div class="navi">
                     <?
-                    foreach($config['navi.special'] as $v )
+                    foreach($config->navi->special as $v )
                     {
                         list($title,$link) = $v;
                         echo "<a href='".SITE_INDEX."/$link'>$title</a> <span class='sep'>&#8226;</span> ";

@@ -3,7 +3,7 @@
 /* Configuration                                                             */ 
 /*****************************************************************************/
 /* This configuration can be overwritten and extend with mm               */ 
-$config = array 
+$defaults = array 
 (
 
     'page.title'                =>  "default",
@@ -24,4 +24,4 @@ $config = array
                                         array("Blog", "blog.php") ), 
     'navi.disabled'             =>  false
 );
-?>
+
