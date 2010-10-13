@@ -23,13 +23,12 @@ function cms_get_dir($requested_path)
 
 	if(count($candidates)>0)
 	{
-			rsort($candidates, SORT_STRING );
-			$path = array_shift( $candidates );
+		rsort($candidates, SORT_STRING );
+		$path = array_shift( $candidates );
 	}
 	else
 	{
-		if(AUTO_INDEX)
-			return $path.".dir";//use dirhandler
+		return $requested_path.".dir";
 	}
 }
 
@@ -45,10 +44,10 @@ function cms_get_file($requested_path,$config)
 	//if the $path is an directory search for the index file
 	if( is_dir($path) )
 		$path = cms_get_dir($path);
-	
-	//if path not exists return 404 error!
-	if( ! file_exists( $path ) ) 
-		$path = cms_error(404);
+	else
+		//if path not exists return 404 error!
+		if( ! file_exists( $path ) ) 
+			$path = cms_error(404);
 
 	$config->set("page.path", $path);
 	$config->set("page.base", cms_get_base() );

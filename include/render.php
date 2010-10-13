@@ -1,10 +1,13 @@
 <?php
+require("lib/markdown.php");
 
 function cms_render_file($path, $config) {
 	$base = basename( $path );
 
-	if(  $ext =  $config->get('page.type') ) ;
-	else $ext = file_suffix($path);
+	#if(  $config->is('page.type') ) 
+	#	$ext = $config->page->type;
+	#else 
+	$ext = file_suffix($path);
 
 	$config->set('page.type', $ext);
 
@@ -13,7 +16,11 @@ function cms_render_file($path, $config) {
 	if(!function_exists($fn) and defined("DEFAULT_HANDLER"))
 		$fn = "parse_".DEFAULT_HANDLER;
 
-	$content =  meta_split( file_get_contents($path) );
+	if($ext != "dir") 
+		$content =  meta_split( file_get_contents($path) );
+	else
+		$content = $path;
+
 	switch(count($content))
 	{
 		case 3:
@@ -21,11 +28,15 @@ function cms_render_file($path, $config) {
 			$parsed = call_user_func_array($fn, array($content[2], $config));
 			break;
 		case 2:
-			$parsed = call_user_func_array($fn, array($content[0], $config));
+			$parsed = call_user_func_array($fn, array($content[1], $config));
+			break;
+		case 1:
+			$parsed = call_user_func_array($fn, array($content, $config));
 			break;
  		default: $parsed="";
 	}
 	return afterparse($parsed,$config);
+
 }
 
 function meta_split($content) {
@@ -40,7 +51,7 @@ function meta_split($content) {
 }
 
 function file_suffix($file) {
-	return substr($file, strrpos($file,'.'));
+	return substr($file, strrpos($file,'.')+1);
 }
 
 function meta_parse($string)
@@ -111,8 +122,7 @@ function parse_html($content,$c=null)
  */
 function parse_mime($content,$c=null)
 {
-	global $path;
-	header("content-type: ". get_mime_type($path)); 
+	header("content-type: ". get_mime_type($c->page->path)); 
 	return  $content;
 }
 
@@ -155,22 +165,22 @@ function parse_plain($content,$c=null) {
  */ 
 function parse_mkd($content,$config) {  return Markdown($content);  }
 
-function parse_layout($content,$cfg) {
-	global $request_file;
+function parse_ml($content,$cfg) {
 	
-	if( isset($cfg['layout']) )
-		$layout = cms_render_file($cfg['layout'], $cfg->copy() );
+	if( $cfg->is("layout") )
+		$layout = cms_render_file(
+				cms_get_file($cfg->layout, $cfg), $cfg);
 	else
 		$layout = $content;
 
+	echo "AAAAA ", $cfg->page->path , " AA<br>";
 	$replace = array();
-	foreach($cfg as $key => $var)
+	foreach($cfg->ml->as_array() as $key => $var)
 	{
-		if( preg_match("/ml\\./", $key) )
-		{
-			$replace[ "%".substr($key,3)."%" ] = 
-				cms_render_file( dirname($cfg->path)."/$var",$cfg->copy() );
-		}
+		$c = $cfg->copy();
+		$path = cms_get_file(dirname($cfg->page->path)."/$var", $c) ;
+		echo $path;
+		$replace[ "%".substr($key,3)."%" ] = cms_render_file( $path, $c );
 	}
 	$layout = str_replace(array_keys($replace), array_values($replace), $layout);
 	return $layout;
@@ -192,12 +202,15 @@ function findFileTypeIcon($file)
 
 function parse_dir( $content , $config = array() )
 {
+	$path = substr($content, 0, strlen($content)-4);
+	echo $path,"sdfjsdalkfj";
+
 	$descpath = "$path/.description";	
+	
 	if(file_exists($descpath))
 		$description= parse_ini_file("$path/.description");
 	else
 		$description = array();
-
 
 	$files = scandir($path);
 
