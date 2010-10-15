@@ -10,7 +10,7 @@ define('ROOT_DIR', dirname(__FILE__).'/../');
 define('CONFIG_DIR', dirname(__FILE__).'/../');
 
 //root url from the site!
-define('ROOT_URL','/~alex/fht/');
+define('ROOT_URL','/~alex/MINICMS/');
 
 // path to the index.php 
 define('SITE_INDEX',ROOT_URL.'index.php');
@@ -28,13 +28,13 @@ define('DATA_DIR','_d');
 define('BLOG_DIR','_b');
 
 //path to the content of error404 
-define('ERROR_404',DATA_DIR.'/error404.text');
+define('ERROR_404',DATA_DIR.'/error404.html');
 
 //use auto mime as default handler, suffix only
 define('DEFAULT_HANDLER', 'mime');
 
 //a mapping of key and url
-define("URLMAP", "map.ini");
+define("URLMAP", "config/map.ini");
 
 //show every error
 error_reporting(E_ALL);

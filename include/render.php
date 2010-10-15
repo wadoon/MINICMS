@@ -1,8 +1,10 @@
 <?php
 require("lib/markdown.php");
+require("lib/geshi/geshi.php");
 
 function cms_render_file($path, $config) {
 	$base = basename( $path );
+
 
 	#if(  $config->is('page.type') ) 
 	#	$ext = $config->page->type;
@@ -36,13 +38,15 @@ function cms_render_file($path, $config) {
  		default: $parsed="";
 	}
 	return afterparse($parsed,$config);
-
 }
 
 function meta_split($content) {
 	$matches = array();
+  	
+	$co = strpos( $content, ':' );
+	$nl = strpos( $content, "\n");
 
-	if( strpos($content, ':') > strpos($content,"\n"))
+	if( !$co || $co>$nl) # first line contains an colon
 	{
 		return array("",$content);
 	}
@@ -169,17 +173,16 @@ function parse_ml($content,$cfg) {
 	
 	if( $cfg->is("layout") )
 		$layout = cms_render_file(
-				cms_get_file($cfg->layout, $cfg), $cfg);
+				cms_get_layout($cfg->layout, $cfg), $cfg);
 	else
 		$layout = $content;
 
-	echo "AAAAA ", $cfg->page->path , " AA<br>";
 	$replace = array();
 	foreach($cfg->ml->as_array() as $key => $var)
 	{
 		$c = $cfg->copy();
 		$path = cms_get_file(dirname($cfg->page->path)."/$var", $c) ;
-		echo $path;
+	#	echo $path;
 		$replace[ "%".substr($key,3)."%" ] = cms_render_file( $path, $c );
 	}
 	$layout = str_replace(array_keys($replace), array_values($replace), $layout);

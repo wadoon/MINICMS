@@ -123,11 +123,8 @@ function import($file)
 
 function lnk($target , $label)
 {
-    global $map;
-    if(!isset($map))
-        $map = parse_ini_file(URLMAP);
-
-    return "<a href='$map[$target]'>$label</a>";
+	$map = cms_get_sitemap();
+	return "<a href='$map[$target]'>$label</a>";
 }
 
 function sourceBox($name)

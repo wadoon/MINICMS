@@ -42,19 +42,11 @@ hr
 .content
 { 
     padding:1em 4em 1em 4em;
-   /* min-height:50ex;*/
     background:white;
-    
     -webkit-border-radius: 0.5em;
     -moz-border-radius: 0.5em;
     border-radius: 0.5em; 
-
-
-    border:1px #ccc solid;
-    
-    -webkit-box-shadow: 10px 25px 10px #222;
-    -moz-box-shadow: 5px 5px 20px #222;
-    box-shadow: 10px 25px 10px #222;
+    border:2px #666 solid;
 }
 
 .content-inner 

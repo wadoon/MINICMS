@@ -73,6 +73,15 @@ function cms_error($code=404)
 	return $path;
 }
 
+
+function cms_get_sitemap()
+{
+	global $__sitemap;
+	return ($__sitemap) 
+		?  $__sitemap 
+		:  $__sitemap = parse_ini_file(URLMAP);
+}
+
 /**
  * Wrap $log_text at the given $limit and $divider
  */
