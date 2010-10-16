@@ -20,8 +20,8 @@ $defaults = array
     'layout.javascript'         =>  array(),
     'layout.noindent'           =>  false,
     'navi.special'              =>  array( 
-                                        array("Home", "index.php"),
-                                        array("Blog", "blog.php") ), 
+                                        array("Home", "/"),
+                                        array("Blog", "blog") ), 
     'navi.disabled'             =>  false
 );
 

@@ -1,0 +1,50 @@
+
+
+<style>
+	.t { 
+		background-color: #ffffff;
+		float: left;
+		height: 400px;
+		overflow-x: hidden;
+		overflow-y: hidden;
+		position: relative;
+		width: 630px;
+	}
+
+	.s { 
+		position: relative;
+		width: 1900px;
+		height:400px;
+	}
+
+
+</style>
+
+<script language="javascript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="%root%/static/jquery.scrollTo-1.4.2-min.js"></script>
+<script language="javascript" type="text/javascript" src="%root%/static/jquery.localscroll-min.js"></script>
+
+
+<div style="clear:both" id="n">
+	<a href="#test1">Test 1</a>
+	<a href="#test2">Test 2</a>
+	<a href="#test3">Test 3</a>
+	<a href="#test4">Test 4</a>
+	<a href="#test5">Test 5</a>
+</div>
+
+<div class="t">
+	<div class="s" id="test1"> %c1%</div>
+	<div class="s" id="test2"> %c2%</div>
+	<div class="s" id="test3"> %c3%</div>
+	<div class="s" id="test4"> %c4%</div>
+	<div class="s" id="test5"> %c5%</div>
+</div>
+<div style="clear:both"></div>
+
+<script language="javascript">
+	$(window).load(function () {
+		$('#n').localScroll( { target: '.t' });
+	});
+</script>
+

@@ -333,3 +333,24 @@ li.zip { list-style: url(images/zip.png);}
 
 a.fh-link:before {
 }
+
+div.article {
+  margin:0.5em;
+}
+
+h2.article  {
+  border-bottom:1px solid #666;
+}
+
+div.sub {
+    font-style:italic;
+    text-align:right;
+    position:relative;
+    font-size:8pt;
+    top:3em;
+}
+
+div.inner {
+  padding:2em;
+}
+

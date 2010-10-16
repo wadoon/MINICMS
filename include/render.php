@@ -5,7 +5,6 @@ require("lib/geshi/geshi.php");
 function cms_render_file($path, $config) {
 	$base = basename( $path );
 
-
 	#if(  $config->is('page.type') ) 
 	#	$ext = $config->page->type;
 	#else 
@@ -60,6 +59,8 @@ function file_suffix($file) {
 
 function meta_parse($string)
 {
+	if(empty($string)) 
+		return array();
 	$lines = explode("\n", $string);
 	$cfg = array();
 	foreach($lines as $line)
@@ -133,7 +134,7 @@ function parse_mime($content,$c=null)
 
 /**
  * Wrapper object for embbedding php execution on output
- */
+ *
 class PHPContent
 {
 	var $content = "";
@@ -149,8 +150,13 @@ class PHPContent
 		return "";
 	}
 }
-
-function parse_phpx($content,$c=null) {  return new PHPContent($content); }
+ */
+//function parse_phpx($content,$c=null) {  return new PHPContent($content); }
+function parse_phpx($content,$c=null) {  
+    $content = preg_replace( 
+        '/(<\?(php)?|\?>)/', "" , $content);
+		return cms_capteval_output($content);
+}
 
 /**
  * Text will be wrapped and has <pre> enviroment
@@ -173,7 +179,7 @@ function parse_ml($content,$cfg) {
 	
 	if( $cfg->is("layout") )
 		$layout = cms_render_file(
-				cms_get_layout($cfg->layout, $cfg), $cfg);
+				cms_get_layout($cfg->layout), $cfg);
 	else
 		$layout = $content;
 
@@ -206,8 +212,6 @@ function findFileTypeIcon($file)
 function parse_dir( $content , $config = array() )
 {
 	$path = substr($content, 0, strlen($content)-4);
-	echo $path,"sdfjsdalkfj";
-
 	$descpath = "$path/.description";	
 	
 	if(file_exists($descpath))

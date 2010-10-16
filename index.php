@@ -19,9 +19,6 @@ require("include/render.php");
 require("config/config.php");
 require("config/defaults.php");
 require("config/snippets.php");
-
-
-
 ##############################################################################
 ## main - section
 
@@ -43,12 +40,20 @@ else
 $config = new config($defaults);
 
 
-$path    = cms_get_file   (DATA_DIR."/$requested_file", $config);
-$content = cms_render_file($path, $config);
+$ctrlname = cms_extract_ctrl($requested_file);
 
 @header("content-type: text/html; charset=utf-8");
 #@header('Expires: '.date('r', time() + 7*24*60*60));
 @header('Last-Modified:'.date('r',filemtime($requested_file)));
-require("include/std.view.php");
+if(cms_exists_ctrl($ctrlname))
+{
+	$content = cms_call_ctrl($requested_file);
+}
+else
+{
+	$path    = cms_get_file   (DATA_DIR."/$requested_file", $config);
+	$content = cms_render_file($path, $config);
+}
+	require("include/std.view.php");
 ?>
 

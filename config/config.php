@@ -6,8 +6,7 @@
 /* Constants                                                                 */ 
 
 define('ROOT_DIR', dirname(__FILE__).'/../');
-
-define('CONFIG_DIR', dirname(__FILE__).'/../');
+define('CONFIG_DIR', dirname(__FILE__));
 
 //root url from the site!
 define('ROOT_URL','/~alex/MINICMS/');
@@ -22,7 +21,7 @@ define('INDEX_PAGE','index');
 define('DEFAULT_LANG', 'de');
 
 // folder with the content
-define('DATA_DIR','_d');
+define('DATA_DIR','../fht/d');
 
 // blog folder
 define('BLOG_DIR','_b');

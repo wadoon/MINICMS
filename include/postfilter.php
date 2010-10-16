@@ -29,11 +29,6 @@ function afterparse($parsed,$config)
 }
 
 function callfunctions($parsed,$config){
-    #$a = array();
-    #preg_match_all('/\[(\w+?)\](.*?)\[\/(\w+?)\]/ims', $parsed, $a);
-    #print_r($a);
-
-    #$parsed = preg_replace_callback('/\[(.+?)\](.*?)\[\/(.+?)\]/ims',"bodyfncall",$parsed);
     $parsed = preg_replace_callback('/[?]"(.+?)"/ims',"callreplacefn",$parsed);
     $parsed = preg_replace_callback('/\[(.+?)\]/ims',"callreplacefn",$parsed);
     return $parsed;

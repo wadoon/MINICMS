@@ -24,9 +24,6 @@
         <base href="<?=$config->page->base?>" />
     </head>
     <body>
-<pre>
-<?#var_dump($config)?></pre>
-
         <div class="body">
             <div class="header">
                 <div class="logo">alexander.weigl</div>
