@@ -1,0 +1,270 @@
+/******************************************************************************/
+/******************************************************************************/
+body,html 
+{ 
+  margin:auto;
+  padding:0;
+}
+
+.body
+{
+  border:1px black solid;
+}
+
+hr 
+{
+  height:1px;
+  width:100%;
+  color:black;
+  border:none;
+  background:black;
+}
+
+.footer 
+{
+  border-top:1px black solid;
+  font-family:monospace;
+  font-size:8pt;
+  margin:0;
+  margin-top:4em;
+  padding:0.2em;
+  background: #ccc;
+}
+
+.header 
+{
+  border-bottom:1px black solid;
+  font-family:monospace;
+  font-size:8pt;
+  margin:0;
+  padding:0.5em;
+  background: #ccc;
+  height:4em;
+}
+
+
+.content
+{ 
+  width:44em; margin:auto;
+  font-family:"Georgia", sans;
+  font: 11pt/1.4;
+}
+
+.content pre.code,
+.content pre code {
+  font-family:"Consolas", monospace;
+  font-size:10pt;
+  margin:0;padding:0;
+  margin-left:2em;  
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+        font-family: helvetica, arial, verdana, sans-serif;
+        font-weight: normal;
+}
+
+.content h1 
+{
+  border-bottom: 3px black solid;  
+  font-size:22pt;
+  font-size: 218%;  
+}
+
+.content h2 
+{
+	border-bottom: 2px black dotted;	
+	font-size:20pt;
+	font-size: 164%;
+}
+
+.content h3 
+{
+	font-size:18pt;
+	font-size: 145%;
+}
+
+.content h4 
+{	
+	font-size:14pt;
+	font-weight:bolder;
+	display:inline;
+	font-size: 118%;
+}
+
+a:visited 
+{ 
+  
+}
+
+a:link, a:focus, a:active 
+{
+  color:navy;
+  text-decoration:underline;
+}
+
+.simpleText 
+{
+    font-size:10pt;
+    font-family:Monospace;
+    white-space:pre;
+}
+
+/********************************************************************/
+/*********************** hierarchie *********************************/
+ul.hierarchie 
+{ 
+  display:inline;   
+  margin: 0.0em; padding: 0;  
+}
+
+ul.hierarchie li 
+{
+   list-style: none;
+   display:inline;
+   position: relative;
+   margin: 0.0em; padding: 0;
+}
+
+
+ul.hierarchie li ul 
+{
+    margin: 0; padding: 0;
+    position: absolute;
+    top: 1.5em; left: 0.2em;
+    display: none;  
+    background:inherit;
+}
+
+ul.hierarchie li:hover ul 
+{
+    display: block; 
+}
+
+ul.hierarchie li ul li 
+{
+    float: none;
+    display: block;
+    background:#e8e4e0;
+    padding:0.5em;
+}
+
+
+ul.hierarchie a, ul.hierarchie span 
+{    
+    /*width: 6.4em;  /* Breite den in li enthaltenen Elementen zuweisen */
+    padding: 0.2em 1em;
+    margin:0.4;
+    text-decoration: none;   
+
+}
+
+ul.hierarchie a:hover, ul.hierarchie span
+{
+  border-color: black;
+  background:gray; color:white;
+}
+
+/********************************************************************/
+
+
+
+/****content******************/
+.rbox, .lbox {
+
+  border:black 1px dotted;
+  width:19.7em;
+  padding:0.5em;
+  margin:0.5em;
+}
+
+
+.rbox {float:right;}
+.lbox {float:left; }
+
+
+.lbox:hover, .rbox:hover {
+  opacity:0.8;
+}
+
+.lbox:first-line , .lbox:first-child {
+  font-size:12pt;
+  text-decoration:underline;
+}		
+
+.fix { 
+  min-height: 6em;
+}
+
+.clear {
+  clear:both;  
+}
+
+.bwidth { width:41.8em; }
+
+img {border:0;}
+
+table.borders {
+  border:1px solid black; 
+  border-collapse:collapse;
+}
+
+table.borders td {
+  border:1px black solid;
+}
+
+
+table.right td {
+  width:3em; text-align:right; border:1px black solid;
+}
+
+table.autoindex {
+  width:100%;
+}
+
+table.autoindex td {
+  text-align:left;
+  vertical-align:center;
+}
+
+.autoindex-description
+{
+	text-align:right;
+	font-size:14pt;
+	color:orange;
+	border:2px solid grey;
+}
+
+tr.odd { background:#edb; }
+tr.odd td { background:#edb; }
+
+
+li.folder {  font-size:12pt;; list-style:url(images/directory.png); font-weight:800; }
+li.file   {  font-size:11pt; list-style:url(images/application.png);font-weight:400;}
+
+li.application { list-style: url(images/application.png);}
+li.code { list-style: url(images/code.png);}
+li.css { list-style: url(images/css.png);}
+li.db { list-style: url(images/db.png);}
+li.directory { list-style: url(images/directory.png);}
+li.doc { list-style: url(images/doc.png);}
+li.file { list-style: url(images/file.png);}
+li.film { list-style: url(images/film.png);}
+li.flash { list-style: url(images/flash.png);}
+li.folder_open { list-style: url(images/folder_open.png);}
+li.html { list-style: url(images/html.png);}
+li.java { list-style: url(images/java.png);}
+li.linux { list-style: url(images/linux.png);}
+li.music { list-style: url(images/music.png);}
+li.pdf { list-style: url(images/pdf.png);}
+li.php { list-style: url(images/php.png);}
+li.picture { list-style: url(images/picture.png);}
+li.ppt { list-style: url(images/ppt.png);}
+li.psd { list-style: url(images/psd.png);}
+li.ruby { list-style: url(images/ruby.png);}
+li.script { list-style: url(images/script.png);}
+li.spinner { list-style: url(images/spinner.gif);}
+li.txt { list-style: url(images/txt.png);}
+li.xls { list-style: url(images/xls.png);}
+li.zip { list-style: url(images/zip.png);}

@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" 
+			content="text/html; charset=utf-8">
+		<title>Editor</title>
+		<script language="javascript"
+			src="http://gzf-experimental.local//js/jquery-1.4.2.min.js"></script>
+	</head>
+	<body>
+		<h1>Editor-Test for Markdown</h1>	
+		<div id="src_out" style="height:0;"></div>
+		<textarea id="txt_editor" row="40" cols="80" 
+			style="background:transparent; color:transparent;display:relativ; border:2px black solid;" spellcheck="false"></textarea>
+
+		<div id="html_out"></div>
+
+		<script language="javascript">
+			$(window).load(function() {
+				$('#txt_editor').bind("keypress", function() {
+					var text = $('#txt_editor').val();
+
+					$.ajax( { 
+						url:  'editor_ajax.php', 
+						type: 'post',
+						dataType: 'json',
+						data: { data:text},
+						async:true,
+						cache:true,
+						error: function(response) { },
+						success: function (response) {
+							$('#html_out').html(response['html']);	
+							$('#src_out').html(response['src']);	
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

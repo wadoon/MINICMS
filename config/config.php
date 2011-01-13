@@ -21,7 +21,7 @@ define('INDEX_PAGE','index');
 define('DEFAULT_LANG', 'de');
 
 // folder with the content
-define('DATA_DIR','../fht/d');
+define('DATA_DIR','_d');
 
 // blog folder
 define('BLOG_DIR','_b');

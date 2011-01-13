@@ -6,11 +6,11 @@
         <title>alexander.weigl - <?=$config->page->title?></title>
 
         <?php if( !$config->layout->nocss): ?>
-        <link href='http://fonts.googleapis.com/css?family=Reenie+Beanie' rel='stylesheet' type='text/css'>
+        <!--link href='http://fonts.googleapis.com/css?family=Reenie+Beanie' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Cantarell:regular,italic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Cantarell:regular,italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Cantarell:regular,italic' rel='stylesheet' type='text/css'-->
         <link type="text/css" rel="stylesheet"  media="screen" href="<?=ROOT_URL?>/static/screen.css"></link>
         <link type="text/css" rel="stylesheet"  media="print" href="<?=ROOT_URL?>/static/print.css"></link>
         <? endif;?>
@@ -26,15 +26,15 @@
     <body>
         <div class="body">
             <div class="header">
-                <div class="logo">alexander.weigl</div>
+		    <div class="logo"><?=$config->page->title ?></div>
                 <?php if(!$config->navi->disabled):?>
                 <div class="navi">
                     <?
                     foreach($config->navi->special as $v )
-                    {
-                        list($title,$link) = $v;
-                        echo "<a href='".SITE_INDEX."/$link'>$title</a> <span class='sep'>&#8226;</span> ";
-                    }
+		    {
+			    list($title,$link) = $v;
+			    echo "<a href='".SITE_INDEX."/$link'>$title</a> <span class='sep'>&#8226;</span> ";
+		    }
 
                     foreach(_glob(DATA_DIR.'/*') as $f)
                     {
@@ -56,9 +56,10 @@
 
             <div class="footer clear" >
                 <p style="float:right">
-                    <?=date("%Y")?> <a href="mailto:weigla@fh-trier.de">Alexander Weigl (INF-I)</a>
-                </p>
-                <?=realpath($requested_file)?> (<strong><?=@date('Y-M-d', filemtime($requested_file)); ?>)
+                    <?=date("Y")?> <a href="mailto:weigla@fh-trier.de">Alexander Weigl (INF-I)</a>
+		</p>
+                <?=realpath($config->page->path)?> (<strong><?=@date('Y-M-d', filemtime($config->page->path)); ?>)
+		<pre><?var_dump($config);?></pre>
                 </div>
                 <script type="text/javascript">
                     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
