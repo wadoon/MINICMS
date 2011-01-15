@@ -59,7 +59,7 @@
                     <?=date("Y")?> <a href="mailto:weigla@fh-trier.de">Alexander Weigl (INF-I)</a>
 		</p>
                 <?=realpath($config->page->path)?> (<strong><?=@date('Y-M-d', filemtime($config->page->path)); ?>)
-		<pre><?var_dump($config);?></pre>
+		<pre><?new DBug($config);?></pre>
                 </div>
                 <script type="text/javascript">
                     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
