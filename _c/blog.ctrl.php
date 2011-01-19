@@ -20,12 +20,12 @@ class BlogController {
 		$start = max( strpos($file,"/"), strpos($file,"_"))+1;
 		$end  = strpos($file,'.');
 
-		return substr($file,$start, $end-$start); 
+		return substr($file,$start, $end-$start);
 	}
 
 	function extr_date($file)
 	{
-		return filemtime($file); 
+		return filemtime($file);
 	}
 
 	function get_article($file)
@@ -36,7 +36,7 @@ class BlogController {
 		$article['date']    = $this->extr_date($file);
 		$article['content'] = cms_render_file($file,$config);
 		$article['file']    = $file;
-		return $article; 
+		return $article;
 	}
 
 	function usort_articles($i,$j)
@@ -47,25 +47,34 @@ class BlogController {
 	function retrieveall($count = false, $page = 0)
 	{
 		$files = glob(BLOG_DIR."/*");
+
 		$articles = array();
+
+
+		// no entries
+		if(! $files)
+		{
+			define("LAST_PAGE", 0);
+			return $articles;
+		}
 
 
 		if($count)
 		{
 			$all   = array_chunk($files, $count);
-			$files = $all[$page]; 
+			$files = $all[$page];
 			define("LAST_PAGE", count($all));
 		}
 
 
 		foreach($files as $file)
-			$articles[]=$this->get_article($file);
+		$articles[]=$this->get_article($file);
 		usort($articles,array($this,"usort_articles"));
 		return $articles;
 	}
 
-	function index($page=0) 
-	{ 
+	function index($page=0)
+	{
 		define("PAGING",1);
 		$page = $this->dflt($page,0);
 		$articles = $this->retrieveall(11, $page);
@@ -74,8 +83,8 @@ class BlogController {
 
 	}
 
-	function all() { 
-		return retrieveall(); 
+	function all() {
+		return retrieveall();
 	}
 
 	function bydate() {
@@ -94,7 +103,7 @@ class BlogController {
 		{
 			$time = filemtime($file);
 			if($time >= $after && $time < $before)
-				$articles[]=$this->get_article($file);
+			$articles[]=$this->get_article($file);
 		}
 		usort($articles,"usort_articles");
 		return $articles;
@@ -103,9 +112,9 @@ class BlogController {
 	function render()
 	{
 		if(isset($_GET['rss']))
-			require("include/rss.view.php");
+		require("include/rss.view.php");
 		else
-			require("include/blog.view.php");
+		require("include/blog.view.php");
 	}
 }
 ?>

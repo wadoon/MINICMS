@@ -20,7 +20,8 @@ class CssController {
 	
 	function __call($name, $args)
 	{
-		$file = "static/css/$name.css";
+		header("content-type: text/css");
+		$file = realpath("static/css/$name.css");
 		echo cssmin::minify(file_get_contents($file));
 		exit();
 	}
