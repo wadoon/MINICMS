@@ -22,6 +22,7 @@ function cms_render_file($path, $config) {
 	else
 		$content = $path;
 
+
 	switch(count($content))
 	{
 		case 3:

@@ -1,10 +1,18 @@
 <?php
-$__postfilters = array("codehighlight");
+$__postfilters = array("codehighlight","embbedmath");
+$__metafilters = array("meta_password_protection");
 
 function cms_add_postfilter($fn)
 {
 	global $__postfilters;
 	$__postfilters[] = $fn;
+}
+
+
+function cms_add_metafilter($fn)
+{
+	global $__metafilters;
+	$__metafilters[]=$fn;
 }
 
 /**
@@ -13,7 +21,7 @@ function cms_add_postfilter($fn)
  */
 function afterparse($parsed,$config)
 {
-    global $snippets, $__postfilters;
+    global $snippets, $__postfilters,$__metafilters;
     $parsed =  callfunctions($parsed,$config);
 
     $parsed = str_replace(array_keys($snippets),
@@ -25,6 +33,9 @@ function afterparse($parsed,$config)
     foreach($__postfilters as $filter)
         $parsed = call_user_func($filter, $parsed);
 
+
+    foreach($__metafilters as $fn)
+	    $parsed = $fn($parsed,$config);
     return $parsed;
 }
 
@@ -186,7 +197,28 @@ function lnkico($url,$text)
     return '<img src="http://'.$host.'/favicon.ico" height="12" style="vertical-align:middle"/>&nbsp;<a class="fh-link" href="'.$url.'">'.$text.'</a>';
 }
 
+function embbedmath($parsed,$config=null)
+{
+#	require_once("lib/phpmathpublisher/mathpublisher.php");
+#	return mathfilter($parsed,12,"static/tmp/");
+	return $parsed;
+}
+
+function meta_password_protection($parsed,$config)
+{
+	if( ! $config->auth->user or empty($config->auth->user )) return $parsed;
 
 
-
+	if (!isset($_SERVER['PHP_AUTH_USER'])) {
+		header('WWW-Authenticate: Basic realm="My Realm"');
+		header('HTTP/1.0 401 Unauthorized');
+		return "You could not authorized to view this article!";	
+	} else {
+		if($_SERVER['PHP_AUTH_USER'] == $config->auth->user
+	       and $_SERVER['PHP_AUTH_PW'] == $config->auth->pass)
+	       		return $parsed;
+	}
+	
+	return "You could not authorized to view this article! $_SERVER[PHP_AUTH_USER]:$_SERVER[PHP_AUTH_PW] <>" . $config->auth->user;
+}
 ?>

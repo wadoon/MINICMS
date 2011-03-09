@@ -6,19 +6,13 @@
         <title>alexander.weigl - <?=$config->page->title?></title>
 
         <?php if( !$config->layout->nocss): ?>
-        <!--link href='http://fonts.googleapis.com/css?family=Reenie+Beanie' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Cantarell:regular,italic' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Cantarell:regular,italic' rel='stylesheet' type='text/css'-->
-        <link type="text/css" rel="stylesheet"  media="screen" href="<?=ROOT_URL?>/static/screen.css"></link>
-        <link type="text/css" rel="stylesheet"  media="print" href="<?=ROOT_URL?>/static/print.css"></link>
+        <link type="text/css" rel="stylesheet"  media="screen" href="<?=ROOT_URL?>/index.php/css/screen"></link>
+        <link type="text/css" rel="stylesheet"  media="print" href="<?=ROOT_URL?>/index.php/css/print"></link>
         <? endif;?>
 
         <?php if (! $config->layout->nojavascript): ?>
-		<script language="javascript" src="<?=ROOT_URL?>static/ASCIIMathML.js"></script>
-		<script language="javascript" src="<?=ROOT_URL?>static/ASCIIsvg.js"></script>
-		<script language="javascript" src="<?=ROOT_URL?>static/raphael-min.js"></script>
+		<script language="javascript" src="<?=ROOT_URL?>index.php/js/ASCIIMathML"></script>
+		<script language="javascript" src="<?=ROOT_URL?>index.php/js/ASCIIsvg"></script>
         <? endif;?>
         <?=$config->layout->noindent ?"<style> .content   {width:inherit; margin:auto; }</style>":""?>
         <base href="<?=$config->page->base?>" />
@@ -59,7 +53,6 @@
                     <?=date("Y")?> <a href="mailto:weigla@fh-trier.de">Alexander Weigl (INF-I)</a>
 		</p>
                 <?=realpath($config->page->path)?> (<strong><?=@date('Y-M-d', filemtime($config->page->path)); ?>)
-		<pre><?new DBug($config);?></pre>
                 </div>
                 <script type="text/javascript">
                     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

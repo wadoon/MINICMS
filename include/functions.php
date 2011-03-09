@@ -57,14 +57,23 @@ function cms_get_file($requested_path,$config)
 			$path = cms_error(404);
 	}
 	$config->set("page.path", $path);
-	$config->set("page.base", cms_get_base() );
+	$config->set("page.base", cms_get_base($path) );
 
 	return $path;
 }
 
-function cms_get_base()
+function trimTo($haystack, $needle)
 {
-	return dirname($_SERVER['PHP_SELF']);
+	return substr($haystack, 
+			strpos($haystack,$needle)+strlen($needle));
+}
+
+
+function cms_get_base($path)
+{	
+	global $config;
+	#echo trimTo($path,DATA_DIR), " $path";
+	return SITE_INDEX . dirname( trimTo($path,DATA_DIR) );
 }
 
 function cms_get_config()

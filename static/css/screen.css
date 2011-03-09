@@ -46,7 +46,7 @@ hr {
 }
 
 .content-inner {
-	width: 40em;
+	width: 50em;
 	color:black !important;
 }
 
@@ -103,9 +103,9 @@ ul.hierarchie li {
 div.logo {
 	float: left;
 	font-family: 'Reenie Beanie', cursive;
-	font-size: 357%;
-	margin: 0.2em;
+	font-size: 291%;
 	color: #eee;
+	text-shadow: 2px 2px 2px black;
 }
 
 div.navi {
@@ -170,7 +170,7 @@ div.navi a:visited {
 	margin: 2em 0em 4em 3em;
 	padding: 1em;
 	min-height: 25ex;
-	background: url(stripelight.png);
+	background: url(../../static/pic/stripelight.png);
 	opacity: 0.5;
 	position: relative;
 	left: 3.9em;
